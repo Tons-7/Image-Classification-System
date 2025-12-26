@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Architecture Diagram</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #ffffff;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px;
+            background-color: white;
+        }
+        
+        .title {
+            font-size: 32px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 32px;
+            color: #1f2937;
+        }
+        
+        .architecture-flow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 32px;
+        }
+        
+        .layer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .input-box {
+            width: 96px;
+            height: 96px;
+            border: 2px solid #6b7280;
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        
+        .layer-info {
+            text-align: center;
+            margin-top: 8px;
+        }
+        
+        .layer-title {
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .layer-dims {
+            font-size: 12px;
+            color: #6b7280;
+        }
+        
+        .arrow {
+            font-size: 32px;
+            color: #374151;
+        }
+        
+        .backbone {
+            background-color: #fef3e2;
+            border: 2px solid #f59e0b;
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+        
+        .backbone-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .backbone-subtitle {
+            font-size: 12px;
+            margin-bottom: 12px;
+        }
+        
+        .backbone-blocks {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+        }
+        
+        .backbone-block {
+            background-color: #fed7aa;
+            border: 1px solid #f59e0b;
+        }
+        
+        .feature-maps {
+            display: flex;
+            justify-content: center;
+            gap: 64px;
+        }
+        
+        .feature-map {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .feature-stack {
+            position: relative;
+            margin-bottom: 80px;
+        }
+        
+        .feature-layer {
+            position: absolute;
+            border: 1px solid;
+        }
+        
+        .c1-layer {
+            width: 64px;
+            height: 64px;
+            background-color: #dbeafe;
+            border-color: #3b82f6;
+        }
+        
+        .c2-layer {
+            width: 48px;
+            height: 48px;
+            background-color: #dcfce7;
+            border-color: #22c55e;
+        }
+        
+        .c3-layer {
+            width: 32px;
+            height: 32px;
+            background-color: #f3e8ff;
+            border-color: #8b5cf6;
+        }
+        
+        .c4-layer {
+            width: 24px;
+            height: 24px;
+            background-color: #fef2f2;
+            border-color: #ef4444;
+        }
+        
+        .fpn-section {
+            background-color: #fffbeb;
+            border: 2px solid #f59e0b;
+            border-radius: 12px;
+            padding: 24px;
+            width: 100%;
+            max-width: 1000px;
+        }
+        
+        .fpn-title {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 16px;
+            font-size: 16px;
+        }
+        
+        .fpn-convs {
+            display: flex;
+            justify-content: center;
+            gap: 64px;
+            margin-bottom: 16px;
+        }
+        
+        .conv-1x1 {
+            text-align: center;
+        }
+        
+        .conv-box {
+            width: 48px;
+            height: 32px;
+            background-color: #fed7aa;
+            border: 1px solid #f59e0b;
+            margin: 0 auto;
+        }
+        
+        .conv-label {
+            font-size: 10px;
+            margin-top: 4px;
+        }
+        
+        .fpn-features {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 32px;
+        }
+        
+        .fpn-feature {
+            text-align: center;
+        }
+        
+        .fpn-box {
+            width: 32px;
+            height: 32px;
+            background-color: #dcfce7;
+            border: 1px solid #22c55e;
+            margin: 0 auto;
+        }
+        
+        .fpn-arrow {
+            font-size: 24px;
+        }
+        
+        .pooling-section {
+            background-color: #f0f4ff;
+            border: 2px solid #6366f1;
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+        
+        .pooling-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .pooling-box {
+            width: 64px;
+            height: 16px;
+            background-color: #c7d2fe;
+            border: 1px solid #6366f1;
+            margin: 8px auto;
+        }
+        
+        .classifier-section {
+            background-color: #fdf2f8;
+            border: 2px solid #ec4899;
+            border-radius: 12px;
+            padding: 24px;
+            width: 100%;
+            max-width: 600px;
+        }
+        
+        .classifier-title {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+        
+        .classifier-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 32px;
+        }
+        
+        .classifier-component {
+            text-align: center;
+        }
+        
+        .dropout-box {
+            width: 16px;
+            height: 48px;
+            background-color: #fce7f3;
+            border: 1px solid #ec4899;
+            margin: 0 auto;
+        }
+        
+        .linear-layers {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 4px;
+        }
+        
+        .linear-layer {
+            width: 64px;
+            height: 4px;
+            background-color: #f9a8d4;
+            border: 1px solid #ec4899;
+        }
+        
+        .output-classes {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        
+        .output-class {
+            width: 32px;
+            height: 12px;
+            background-color: #ef4444;
+            border: 1px solid #dc2626;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 8px;
+        }
+        
+        .component-label {
+            font-size: 10px;
+            margin-top: 8px;
+        }
+        
+        .specs-section {
+            background-color: #f9fafb;
+            border: 1px solid #d1d5db;
+            border-radius: 12px;
+            padding: 16px;
+            width: 100%;
+            max-width: 800px;
+            margin-top: 32px;
+        }
+        
+        .specs-title {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+        
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            font-size: 12px;
+        }
+        
+        .spec-category {
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        
+        .spec-list {
+            list-style-type: disc;
+            list-style-position: inside;
+            margin-left: 8px;
+        }
+        
+        .spec-list li {
+            margin-bottom: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Image Classification Model with Feature Pyramid Network (FPN)</h1>
+        
+        <div class="architecture-flow">
+            <!-- Input Layer -->
+            <div class="layer">
+                <div class="input-box">IMG</div>
+                <div class="layer-info">
+                    <div class="layer-title">INPUT</div>
+                    <div class="layer-dims">(224 × 224 × 3)</div>
+                </div>
+            </div>
+            
+            <div class="arrow">↓</div>
+            
+            <!-- Backbone CNN -->
+            <div class="layer">
+                <div class="backbone">
+                    <div class="backbone-title">BACKBONE CNN</div>
+                    <div class="backbone-subtitle">(EfficientNet-V2-L / ResNet50 / MobileNet-V3)</div>
+                    <div class="backbone-blocks">
+                        <div class="backbone-block" style="width: 32px; height: 48px;"></div>
+                        <div class="backbone-block" style="width: 32px; height: 40px;"></div>
+                        <div class="backbone-block" style="width: 32px; height: 32px;"></div>
+                        <div class="backbone-block" style="width: 32px; height: 24px;"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="arrow">↓</div>
+            
+            <!-- Multi-Scale Feature Extraction -->
+            <div class="feature-maps">
+                <!-- C1 Feature Map -->
+                <div class="feature-map">
+                    <div class="feature-stack">
+                        <div class="feature-layer c1-layer" style="left: 0px; top: 0px; z-index: 8;"></div>
+                        <div class="feature-layer c1-layer" style="left: 4px; top: 4px; z-index: 7;"></div>
+                        <div class="feature-layer c1-layer" style="left: 8px; top: 8px; z-index: 6;"></div>
+                        <div class="feature-layer c1-layer" style="left: 12px; top: 12px; z-index: 5;"></div>
+                        <div class="feature-layer c1-layer" style="left: 16px; top: 16px; z-index: 4;"></div>
+                    </div>
+                    <div class="layer-info">
+                        <div class="layer-title">C1</div>
+                        <div class="layer-dims">(56 × 56 × 256)</div>
+                    </div>
+                </div>
+                
+                <!-- C2 Feature Map -->
+                <div class="feature-map">
+                    <div class="feature-stack">
+                        <div class="feature-layer c2-layer" style="left: 0px; top: 0px; z-index: 6;"></div>
+                        <div class="feature-layer c2-layer" style="left: 4px; top: 4px; z-index: 5;"></div>
+                        <div class="feature-layer c2-layer" style="left: 8px; top: 8px; z-index: 4;"></div>
+                        <div class="feature-layer c2-layer" style="left: 12px; top: 12px; z-index: 3;"></div>
+                    </div>
+                    <div class="layer-info">
+                        <div class="layer-title">C2</div>
+                        <div class="layer-dims">(28 × 28 × 512)</div>
+                    </div>
+                </div>
+                
+                <!-- C3 Feature Map -->
+                <div class="feature-map">
+                    <div class="feature-stack">
+                        <div class="feature-layer c3-layer" style="left: 0px; top: 0px; z-index: 4;"></div>
+                        <div class="feature-layer c3-layer" style="left: 4px; top: 4px; z-index: 3;"></div>
+                        <div class="feature-layer c3-layer" style="left: 8px; top: 8px; z-index: 2;"></div>
+                    </div>
+                    <div class="layer-info">
+                        <div class="layer-title">C3</div>
+                        <div class="layer-dims">(14 × 14 × 1024)</div>
+                    </div>
+                </div>
+                
+                <!-- C4 Feature Map -->
+                <div class="feature-map">
+                    <div class="feature-stack">
+                        <div class="feature-layer c4-layer" style="left: 0px; top: 0px; z-index: 3;"></div>
+                        <div class="feature-layer c4-layer" style="left: 4px; top: 4px; z-index: 2;"></div>
+                    </div>
+                    <div class="layer-info">
+                        <div class="layer-title">C4</div>
+                        <div class="layer-dims">(7 × 7 × 2048)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="arrow">↓</div>
+            
+            <!-- FPN Processing -->
+            <div class="fpn-section">
+                <div class="fpn-title">FEATURE PYRAMID NETWORK (FPN)</div>
+                
+                <!-- 1x1 Convolutions -->
+                <div class="fpn-convs">
+                    <div class="conv-1x1">
+                        <div class="conv-box"></div>
+                        <div class="conv-label">1×1 Conv<br>256 channels</div>
+                    </div>
+                    <div class="conv-1x1">
+                        <div class="conv-box"></div>
+                        <div class="conv-label">1×1 Conv<br>256 channels</div>
+                    </div>
+                    <div class="conv-1x1">
+                        <div class="conv-box"></div>
+                        <div class="conv-label">1×1 Conv<br>256 channels</div>
+                    </div>
+                    <div class="conv-1x1">
+                        <div class="conv-box"></div>
+                        <div class="conv-label">1×1 Conv<br>256 channels</div>
+                    </div>
+                </div>
+                
+                <!-- Lateral Connections and Upsampling -->
+                <div class="fpn-features">
+                    <div class="fpn-feature">
+                        <div class="fpn-box"></div>
+                        <div class="conv-label">P1<br>(56×56×256)</div>
+                    </div>
+                    <div class="fpn-arrow">←</div>
+                    <div class="fpn-feature">
+                        <div class="fpn-box"></div>
+                        <div class="conv-label">P2<br>(28×28×256)</div>
+                    </div>
+                    <div class="fpn-arrow">←</div>
+                    <div class="fpn-feature">
+                        <div class="fpn-box"></div>
+                        <div class="conv-label">P3<br>(14×14×256)</div>
+                    </div>
+                    <div class="fpn-arrow">←</div>
+                    <div class="fpn-feature">
+                        <div class="fpn-box"></div>
+                        <div class="conv-label">P4<br>(7×7×256)</div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; font-size: 10px; margin-top: 8px; color: #6b7280;">
+                    Upsampling (2×) + Element-wise Addition + 3×3 Conv
+                </div>
+            </div>
+            
+            <div class="arrow">↓</div>
+            
+            <!-- Global Average Pooling -->
+            <div class="layer">
+                <div class="pooling-section">
+                    <div class="pooling-title">Global Average Pooling</div>
+                    <div class="pooling-box"></div>
+                </div>
+                <div class="layer-info">
+                    <div class="layer-dims">(1 × 1 × 256)</div>
+                </div>
+            </div>
+            
+            <div class="arrow">↓</div>
+            
+            <!-- Flatten -->
+            <div class="layer">
+                <div style="background-color: #f3f4f6; border: 2px solid #9ca3af; border-radius: 12px; padding: 8px;">
+                    <div style="text-align: center; font-weight: bold;">Flatten</div>
+                </div>
+                <div class="layer-info">
+                    <div class="layer-dims">(256,)</div>
+                </div>
+            </div>
+            
+            <div class="arrow">↓</div>
+            
+            <!-- Classification Head -->
+            <div class="classifier-section">
+                <div class="classifier-title">CLASSIFICATION HEAD</div>
+                
+                <div class="classifier-flow">
+                    <!-- Dropout -->
+                    <div class="classifier-component">
+                        <div class="dropout-box"></div>
+                        <div class="component-label">Dropout<br>(p=0.3)</div>
+                    </div>
+                    
+                    <div class="fpn-arrow">→</div>
+                    
+                    <!-- Linear Layer -->
+                    <div class="classifier-component">
+                        <div class="linear-layers">
+                            <div class="linear-layer"></div>
+                            <div class="linear-layer"></div>
+                            <div class="linear-layer"></div>
+                            <div class="linear-layer"></div>
+                            <div class="linear-layer"></div>
+                            <div class="linear-layer"></div>
+                            <div class="linear-layer"></div>
+                            <div class="linear-layer"></div>
+                        </div>
+                        <div class="component-label">Linear Layer<br>(256 → num_classes)</div>
+                    </div>
+                    
+                    <div class="fpn-arrow">→</div>
+                    
+                    <!-- Output -->
+                    <div class="classifier-component">
+                        <div class="output-classes">
+                            <div class="output-class">0</div>
+                            <div class="output-class">1</div>
+                            <div class="output-class">2</div>
+                            <div style="text-align: center; font-size: 12px;">⋮</div>
+                            <div class="output-class">N</div>
+                        </div>
+                        <div class="component-label">OUTPUT<br>(num_classes)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Model Specifications -->
+            <div class="specs-section">
+                <div class="specs-title">MODEL SPECIFICATIONS</div>
+                <div class="specs-grid">
+                    <div>
+                        <div class="spec-category">Backbone Options:</div>
+                        <ul class="spec-list">
+                            <li>EfficientNet-V2-L</li>
+                            <li>EfficientNet-V2-S</li>
+                            <li>ResNet50</li>
+                            <li>MobileNet-V3-Large</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="spec-category">Training Features:</div>
+                        <ul class="spec-list">
+                            <li>Mixed Precision Training</li>
+                            <li>Data Augmentation</li>
+                            <li>Class Weighting</li>
+                            <li>Early Stopping</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="spec-category">FPN Features:</div>
+                        <ul class="spec-list">
+                            <li>Multi-scale Feature Fusion</li>
+                            <li>Lateral Connections</li>
+                            <li>Top-down Pathway</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="spec-category">Optimization:</div>
+                        <ul class="spec-list">
+                            <li>AdamW Optimizer</li>
+                            <li>Learning Rate Scheduling</li>
+                            <li>Gradient Clipping</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
