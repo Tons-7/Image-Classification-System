@@ -27,3 +27,7 @@ This project was built to demonstrate:
 
 This repository focuses on **engineering and integration**, not only model accuracy.
 It is intended as a **portfolio project** showcasing end-to-end ML system development.
+
+# License
+
+This project is only for educational purposes
